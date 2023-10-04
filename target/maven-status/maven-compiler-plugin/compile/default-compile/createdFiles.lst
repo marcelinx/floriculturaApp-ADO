@@ -4,6 +4,7 @@ com/mycompany/floriculturaapp/Client$2.class
 com/mycompany/floriculturaapp/Login$4.class
 com/mycompany/floriculturaapp/Product$5.class
 com/mycompany/floriculturaapp/Client$7.class
+com/mycompany/floriculturaapp/TelaDeVendasLogic.class
 com/mycompany/floriculturaapp/Client$6.class
 com/mycompany/floriculturaapp/Product.class
 com/mycompany/floriculturaapp/principalScreen$3.class
@@ -11,6 +12,7 @@ com/mycompany/floriculturaapp/Login$2.class
 com/mycompany/floriculturaapp/Product$2.class
 com/mycompany/floriculturaapp/Client$1.class
 com/mycompany/floriculturaapp/Product$4.class
+com/mycompany/floriculturaapp/Produto.class
 com/mycompany/floriculturaapp/FloriculturaApp.class
 com/mycompany/floriculturaapp/principalScreen.class
 com/mycompany/floriculturaapp/Login.class
@@ -19,6 +21,7 @@ com/mycompany/floriculturaapp/Login$3.class
 com/mycompany/floriculturaapp/Client$3.class
 com/mycompany/floriculturaapp/Product$1.class
 com/mycompany/floriculturaapp/Product$6.class
+com/mycompany/floriculturaapp/SellScreen.class
 com/mycompany/floriculturaapp/Login$1.class
 com/mycompany/floriculturaapp/Client$5.class
 com/mycompany/floriculturaapp/Product$3.class
