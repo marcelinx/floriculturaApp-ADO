@@ -19,6 +19,7 @@ public class principalScreen extends javax.swing.JFrame {
         description = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("CuMeCheira");
         setBackground(new java.awt.Color(242, 228, 216));
 
         screenClientButton.setBackground(new java.awt.Color(242, 242, 242));
