@@ -74,9 +74,9 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="fieldPrice" min="-2" pref="201" max="-2" attributes="0"/>
                   </Group>
-                  <Component id="jScrollPane2" alignment="0" min="-2" pref="1571" max="-2" attributes="0"/>
+                  <Component id="jScrollPane2" alignment="0" pref="1423" max="32767" attributes="0"/>
               </Group>
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="154" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -105,7 +105,7 @@
               <Component id="separatorOne" min="-2" pref="11" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
               <Component id="jScrollPane2" min="-2" pref="331" max="-2" attributes="0"/>
-              <EmptySpace pref="27" max="32767" attributes="0"/>
+              <EmptySpace pref="29" max="32767" attributes="0"/>
               <Component id="separatorTwo" min="-2" pref="11" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -185,9 +185,6 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="fieldPrice">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="."/>
-      </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="btnDelete">
       <Properties>

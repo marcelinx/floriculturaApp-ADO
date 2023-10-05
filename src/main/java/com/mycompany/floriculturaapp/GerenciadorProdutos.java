@@ -15,6 +15,11 @@ public class GerenciadorProdutos {
         listaProdutos.add(new Produto("Lírio Branco", 3, 102, 3.0));
         listaProdutos.add(new Produto("Tulipa Amarela", 8, 103, 2.0));
         listaProdutos.add(new Produto("Girassol", 4, 104, 2.2));
+        listaProdutos.add(new Produto("Cacto Espinhoso", 10, 109, 4.0));
+        listaProdutos.add(new Produto("Samambaia", 6, 110, 5.0));
+        listaProdutos.add(new Produto("Adubo Universal", 15, 111, 7.5));
+        listaProdutos.add(new Produto("Pá de Jardim", 2, 112, 12.0));
+
     }
 
     public List<Produto> pesquisarPorCodigo(int codigo) {

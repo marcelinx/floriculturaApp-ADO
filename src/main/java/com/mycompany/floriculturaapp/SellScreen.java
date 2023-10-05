@@ -2,19 +2,27 @@ package com.mycompany.floriculturaapp;
 
 import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
-import java.awt.event.ActionEvent;
 import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
 
 public class SellScreen extends javax.swing.JFrame {
     
- private GerenciadorProdutos gerenciadorProdutos = new GerenciadorProdutos();
+    private boolean isAdminAuthenticated = false; // Variável de controle de autenticação
+    private JTextField usuarioField;
+    private JPasswordField senhaField;
+    private GerenciadorProdutos gerenciadorProdutos = new GerenciadorProdutos();
+    
+    private double totalValue = 0.0;
 
     public SellScreen() {
         initComponents();
 
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setLocationRelativeTo(null);
+        
+        textResult.setText("Total");
     }
 
     @SuppressWarnings("unchecked")
@@ -83,8 +91,6 @@ public class SellScreen extends javax.swing.JFrame {
         textResult.setForeground(new java.awt.Color(140, 17, 120));
         textResult.setText("Total R$:");
 
-        fieldPrice.setText(".");
-
         btnDelete.setText("Excluir");
         btnDelete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -141,8 +147,8 @@ public class SellScreen extends javax.swing.JFrame {
                         .addComponent(textResult)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(fieldPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 1571, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 1423, Short.MAX_VALUE))
+                .addGap(154, 154, 154))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -165,7 +171,7 @@ public class SellScreen extends javax.swing.JFrame {
                 .addComponent(separatorOne, javax.swing.GroupLayout.PREFERRED_SIZE, 11, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(17, 17, 17)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 331, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
                 .addComponent(separatorTwo, javax.swing.GroupLayout.PREFERRED_SIZE, 11, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -178,7 +184,7 @@ public class SellScreen extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-            String codigoText = searchField.getText().trim();  // Remove espaços em branco
+    String codigoText = searchField.getText().trim();  // Remove espaços em branco
     int codigo;
 
     try {
@@ -207,16 +213,75 @@ public class SellScreen extends javax.swing.JFrame {
 private void addProdutoToTable(Produto produto) {
     DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
     model.addRow(new Object[]{produto.getNome(), produto.getQuantidade(), produto.getCodigo(), produto.getPreco()});
+  
+    calculateTotalValue();
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void searchFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchFieldActionPerformed
-        // TODO add your handling code here:
+  
     }//GEN-LAST:event_searchFieldActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnDeleteActionPerformed
+         if (isAdminAuthenticated) { // Verifica se o administrador está autenticado
+            int linhaSelecionada = jTable2.getSelectedRow();
 
+            if (linhaSelecionada >= 0) {
+                DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
+                model.removeRow(linhaSelecionada);
+            } else {
+                JOptionPane.showMessageDialog(this, "Selecione uma linha para excluir.", "Aviso", JOptionPane.WARNING_MESSAGE);
+            }
+        } else {
+            showAuthenticationDialog(); // Exibe a caixa de diálogo de autenticação
+        }
+         
+         calculateTotalValue();
+    }
+    
+    private void calculateTotalValue() {
+    DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
+    int rowCount = model.getRowCount();
+    totalValue = 0.0;
+
+    for (int i = 0; i < rowCount; i++) {
+        Object priceObj = model.getValueAt(i, 3); // Obtém o valor da coluna de preços
+        if (priceObj != null) {
+            try {
+                double price = Double.parseDouble(priceObj.toString()); // Converte para double
+                totalValue += price;
+            } catch (NumberFormatException e) {
+                // Lida com valores não numéricos (opcional)
+            }
+        }
+    }
+
+    textResult.setText("Total R$: " + totalValue); // Atualiza o texto com o valor total
+}
+
+
+    private void showAuthenticationDialog() {
+        JTextField usernameField = new JTextField();
+        JPasswordField passwordField = new JPasswordField();
+        Object[] message = {
+            "Nome de usuário:", usernameField,
+            "Senha:", passwordField
+        };
+
+        int option = JOptionPane.showConfirmDialog(this, message, "Autenticação de Administrador", JOptionPane.OK_CANCEL_OPTION);
+
+        if (option == JOptionPane.OK_OPTION) {
+            String username = usernameField.getText();
+            String password = new String(passwordField.getPassword());
+
+            if (username.equals("admin") && password.equals("admin")) {
+                isAdminAuthenticated = true; // Autenticação bem-sucedida
+                btnDeleteActionPerformed(null); // Tente excluir novamente
+            } else {
+                JOptionPane.showMessageDialog(this, "Credenciais de administrador incorretas.", "Aviso", JOptionPane.WARNING_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_btnDeleteActionPerformed
+    
     public static void main(String args[]) {
 
         java.awt.EventQueue.invokeLater(new Runnable() {
