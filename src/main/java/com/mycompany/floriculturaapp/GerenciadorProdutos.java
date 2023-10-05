@@ -17,13 +17,14 @@ public class GerenciadorProdutos {
         listaProdutos.add(new Produto("Girassol", 4, 104, 2.2));
     }
 
-    public List<Produto> pesquisarProduto(String termoPesquisa) {
+    public List<Produto> pesquisarPorCodigo(int codigo) {
         List<Produto> resultados = new ArrayList<>();
 
-        // Simula a pesquisa de produtos na lista fictícia
+        // Simula a pesquisa de produtos por código na lista fictícia
         for (Produto produto : listaProdutos) {
-            if (produto.getNome().toLowerCase().contains(termoPesquisa.toLowerCase())) {
+            if (produto.getCodigo() == codigo) {
                 resultados.add(produto);
+                break; // Para a pesquisa assim que encontrar o produto com o código
             }
         }
 

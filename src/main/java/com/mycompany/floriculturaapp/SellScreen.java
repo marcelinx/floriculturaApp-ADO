@@ -178,28 +178,30 @@ public class SellScreen extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-            String termoPesquisa = searchField.getText().trim();  // Remove espaços em branco
+            String codigoText = searchField.getText().trim();  // Remove espaços em branco
+    int codigo;
 
-    // Verifica se o campo de pesquisa não está vazio
-    if (!termoPesquisa.isEmpty()) {
-        // Pesquisa produtos fictícios com base no termo de pesquisa
-        List<Produto> resultados = gerenciadorProdutos.pesquisarProduto(termoPesquisa);
-
-        // Verifica se foram encontrados produtos
-        if (resultados.isEmpty()) {
-            // Exibe um aviso ao usuário informando que nenhum produto foi encontrado
-            JOptionPane.showMessageDialog(this, "Nenhum produto encontrado.", "Aviso", JOptionPane.WARNING_MESSAGE);
-        } else {
-            // Adiciona o primeiro produto da lista de resultados à tabela
-            addProdutoToTable(resultados.get(0));
-
-            // Limpa o campo de pesquisa
-            searchField.setText("");
-        }
-    } else {
-        // Exibe um aviso ao usuário informando que o campo de pesquisa está vazio
-        JOptionPane.showMessageDialog(this, "Digite um termo de pesquisa.", "Aviso", JOptionPane.WARNING_MESSAGE);
+    try {
+        codigo = Integer.parseInt(codigoText);
+    } catch (NumberFormatException e) {
+        // Se o texto não for um número válido, exibe um aviso ao usuário
+        JOptionPane.showMessageDialog(this, "Digite um código válido.", "Aviso", JOptionPane.WARNING_MESSAGE);
+        return; // Sai do método sem fazer a pesquisa
     }
+
+    // Pesquisa produtos fictícios com base no código
+    List<Produto> resultados = gerenciadorProdutos.pesquisarPorCodigo(codigo);
+
+    if (resultados.isEmpty()) {
+        // Exibe um aviso ao usuário informando que nenhum produto foi encontrado
+        JOptionPane.showMessageDialog(this, "Nenhum produto encontrado com o código " + codigo + ".", "Aviso", JOptionPane.WARNING_MESSAGE);
+    } else {
+        // Adiciona o produto encontrado à tabela
+        addProdutoToTable(resultados.get(0));
+    }
+
+    // Limpa o campo de pesquisa
+    searchField.setText("");
 }
 
 private void addProdutoToTable(Produto produto) {
