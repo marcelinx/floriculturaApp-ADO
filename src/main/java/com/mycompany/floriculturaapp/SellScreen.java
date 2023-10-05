@@ -43,6 +43,8 @@ public class SellScreen extends javax.swing.JFrame {
         btnDelete = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
+        btnPayment = new javax.swing.JButton();
+        btnLeaveScreen1 = new javax.swing.JButton();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -100,10 +102,7 @@ public class SellScreen extends javax.swing.JFrame {
 
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
                 "Produto", "Quantidade", "Código", "Preço"
@@ -119,12 +118,31 @@ public class SellScreen extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(jTable2);
 
+        btnPayment.setForeground(new java.awt.Color(140, 17, 120));
+        btnPayment.setText("Pagamento");
+        btnPayment.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPaymentActionPerformed(evt);
+            }
+        });
+
+        btnLeaveScreen1.setForeground(new java.awt.Color(140, 17, 120));
+        btnLeaveScreen1.setText("Sair");
+        btnLeaveScreen1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLeaveScreen1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(separatorOne)
             .addComponent(separatorTwo)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 1375, Short.MAX_VALUE)
+                .addGap(304, 304, 304))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -146,9 +164,17 @@ public class SellScreen extends javax.swing.JFrame {
                         .addGap(458, 458, 458)
                         .addComponent(textResult)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(fieldPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 1423, Short.MAX_VALUE))
-                .addGap(154, 154, 154))
+                        .addComponent(fieldPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(751, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(btnPayment, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(388, 388, 388))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addContainerGap(1332, Short.MAX_VALUE)
+                    .addComponent(btnLeaveScreen1, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(146, 146, 146)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -171,13 +197,20 @@ public class SellScreen extends javax.swing.JFrame {
                 .addComponent(separatorOne, javax.swing.GroupLayout.PREFERRED_SIZE, 11, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(17, 17, 17)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 331, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                .addGap(42, 42, 42)
+                .addComponent(btnPayment, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
                 .addComponent(separatorTwo, javax.swing.GroupLayout.PREFERRED_SIZE, 11, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(textResult)
                     .addComponent(fieldPrice))
                 .addGap(14, 14, 14))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addContainerGap(467, Short.MAX_VALUE)
+                    .addComponent(btnLeaveScreen1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(92, 92, 92)))
         );
 
         pack();
@@ -281,6 +314,43 @@ private void addProdutoToTable(Produto produto) {
             }
         }
     }//GEN-LAST:event_btnDeleteActionPerformed
+
+    private String showPaymentOptionsDialog() {
+        String[] options = {"Dinheiro", "Cartão", "PIX"};
+        int choice = JOptionPane.showOptionDialog(
+            this,
+            "Selecione o método de pagamento:",
+            "Opções de Pagamento",
+            JOptionPane.DEFAULT_OPTION,
+            JOptionPane.QUESTION_MESSAGE,
+            null,
+            options,
+            options[0]
+        );
+
+        if (choice >= 0) {
+            return options[choice];
+        } else {
+            return null; // Retorna null se o diálogo for fechado sem seleção
+        }
+    }
+    
+    private void btnPaymentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPaymentActionPerformed
+        String selectedOption = showPaymentOptionsDialog();
+
+        if (selectedOption != null) {
+            // Define todas as linhas da tabela como vazias
+            DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
+            model.setRowCount(0);
+            calculateTotalValue(); // Recalcula o valor total após limpar a tabela
+        }
+    }//GEN-LAST:event_btnPaymentActionPerformed
+
+    private void btnLeaveScreen1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLeaveScreen1ActionPerformed
+        principalScreen pS = new principalScreen();
+        this.setVisible(false);
+        pS.setVisible(true);
+    }//GEN-LAST:event_btnLeaveScreen1ActionPerformed
     
     public static void main(String args[]) {
 
@@ -294,6 +364,8 @@ private void addProdutoToTable(Produto produto) {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnDelete;
+    private javax.swing.JButton btnLeaveScreen1;
+    private javax.swing.JButton btnPayment;
     private javax.swing.JLabel fieldPrice;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;

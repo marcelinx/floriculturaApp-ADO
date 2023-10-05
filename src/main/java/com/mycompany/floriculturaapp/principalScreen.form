@@ -34,9 +34,14 @@
           <Component id="description" alignment="0" max="32767" attributes="0"/>
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="294" max="-2" attributes="0"/>
-              <Component id="screenClientButton" min="-2" pref="135" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="screenProductButton" min="-2" pref="135" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="screenSellingtButton" min="-2" pref="135" max="-2" attributes="0"/>
+                  <Group type="102" attributes="0">
+                      <Component id="screenClientButton" min="-2" pref="135" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="screenProductButton" min="-2" pref="135" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
@@ -52,7 +57,9 @@
                   <Component id="screenClientButton" alignment="3" min="-2" pref="45" max="-2" attributes="0"/>
                   <Component id="screenProductButton" alignment="3" min="-2" pref="45" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="345" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="screenSellingtButton" min="-2" pref="45" max="-2" attributes="0"/>
+              <EmptySpace pref="294" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -113,6 +120,25 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="screenProductButtonActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="screenSellingtButton">
+      <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="f2" green="f2" red="f2" type="rgb"/>
+        </Property>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="78" green="11" red="8c" type="rgb"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Venda"/>
+        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+          <Border info="org.netbeans.modules.form.compat2.border.BevelBorderInfo">
+            <BevelBorder/>
+          </Border>
+        </Property>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="screenSellingtButtonActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

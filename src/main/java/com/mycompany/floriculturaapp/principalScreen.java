@@ -18,6 +18,7 @@ public class principalScreen extends javax.swing.JFrame {
         title = new javax.swing.JLabel();
         description = new javax.swing.JLabel();
         screenProductButton = new javax.swing.JButton();
+        screenSellingtButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("CuMeCheira");
@@ -50,6 +51,16 @@ public class principalScreen extends javax.swing.JFrame {
             }
         });
 
+        screenSellingtButton.setBackground(new java.awt.Color(242, 242, 242));
+        screenSellingtButton.setForeground(new java.awt.Color(140, 17, 120));
+        screenSellingtButton.setText("Venda");
+        screenSellingtButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        screenSellingtButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                screenSellingtButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -60,9 +71,12 @@ public class principalScreen extends javax.swing.JFrame {
             .addComponent(description, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addGap(294, 294, 294)
-                .addComponent(screenClientButton, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(screenProductButton, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(screenSellingtButton, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(screenClientButton, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(screenProductButton, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -75,7 +89,9 @@ public class principalScreen extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(screenClientButton, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(screenProductButton, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(345, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(screenSellingtButton, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(294, Short.MAX_VALUE))
         );
 
         pack();
@@ -93,6 +109,12 @@ public class principalScreen extends javax.swing.JFrame {
         l.setVisible(true);
     }//GEN-LAST:event_screenProductButtonActionPerformed
 
+    private void screenSellingtButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_screenSellingtButtonActionPerformed
+        SellScreen sC = new SellScreen();
+        this.setVisible(false);
+        sC.setVisible(true);
+    }//GEN-LAST:event_screenSellingtButtonActionPerformed
+
     public static void main(String args[]) {
 
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -106,6 +128,7 @@ public class principalScreen extends javax.swing.JFrame {
     private javax.swing.JLabel description;
     private javax.swing.JButton screenClientButton;
     private javax.swing.JButton screenProductButton;
+    private javax.swing.JButton screenSellingtButton;
     private javax.swing.JLabel title;
     // End of variables declaration//GEN-END:variables
 }
