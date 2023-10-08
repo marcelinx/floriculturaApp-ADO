@@ -1,5 +1,7 @@
 package com.mycompany.floriculturaapp;
 
+import java.util.HashSet;
+import java.util.Set;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -8,6 +10,7 @@ public class Client extends javax.swing.JFrame {
     
     private DefaultTableModel tableModel;
     private int selectedRow = -1;
+    private Set<String> cpfSet = new HashSet<>();
 
     public Client() {
         initComponents();
@@ -15,6 +18,49 @@ public class Client extends javax.swing.JFrame {
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setLocationRelativeTo(null);
         tableModel = (DefaultTableModel) clientTable.getModel();
+    }
+    
+        private boolean validateCPF(String cpf) {
+        cpf = cpf.replaceAll("[^0-9]", "");
+
+        if (cpf.length() != 11) {
+            return false;
+        }
+
+        int[] digits = new int[11];
+        for (int i = 0; i < 11; i++) {
+            digits[i] = Character.getNumericValue(cpf.charAt(i));
+        }
+
+        int sum = 0;
+        for (int i = 0; i < 9; i++) {
+            sum += digits[i] * (10 - i);
+        }
+        int firstDigit = 11 - (sum % 11);
+
+        if (firstDigit == 10 || firstDigit == 11) {
+            firstDigit = 0;
+        }
+
+        if (firstDigit != digits[9]) {
+            return false;
+        }
+
+        sum = 0;
+        for (int i = 0; i < 10; i++) {
+            sum += digits[i] * (11 - i);
+        }
+        int secondDigit = 11 - (sum % 11);
+
+        if (secondDigit == 10 || secondDigit == 11) {
+            secondDigit = 0;
+        }
+
+        return secondDigit == digits[10];
+    }
+        
+        private boolean isDuplicateCPF(String cpf) {
+        return cpfSet.contains(cpf);
     }
 
     @SuppressWarnings("unchecked")
@@ -70,7 +116,7 @@ public class Client extends javax.swing.JFrame {
         numberPhone.setText("Numero");
 
         numberID.setForeground(new java.awt.Color(140, 17, 120));
-        numberID.setText("ID");
+        numberID.setText("CPF");
 
         textClient.setForeground(new java.awt.Color(140, 17, 120));
         textClient.setText("Tipo de Cliente");
@@ -229,33 +275,32 @@ public class Client extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-    
-    String nome = nameField.getText();
-    String rua = streetField.getText();
-    String bairro = neighborhoodField.getText();
-    String tipoCliente = clientType.getSelectedItem().toString();
-    int id;
+        String nome = nameField.getText();
+        String rua = streetField.getText();
+        String bairro = neighborhoodField.getText();
+        String tipoCliente = clientType.getSelectedItem().toString();
+        String cpf = idField.getText();
 
-    try {
-        id = Integer.parseInt(idField.getText());
-    } catch (NumberFormatException e) {
-        JOptionPane.showMessageDialog(null, "O campo 'ID' deve ser um número inteiro.", "Erro", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
+        if (!validateCPF(cpf)) {
+            JOptionPane.showMessageDialog(null, "CPF inválido.", "Erro", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
-    if (nome.isEmpty() || rua.isEmpty() || bairro.isEmpty() || tipoCliente.equals("Selecione o tipo") || idField.getText().isEmpty()) {
-        JOptionPane.showMessageDialog(null, "Preencha todos os campos obrigatórios.", "Erro", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
+        if (isDuplicateCPF(cpf)) {
+            JOptionPane.showMessageDialog(null, "CPF já existe na tabela.", "Erro", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
-    Object[] rowData = {nome, bairro, id, tipoCliente};
-    tableModel.insertRow(0, rowData);
+        Object[] rowData = {nome, bairro, cpf, tipoCliente};
+        tableModel.addRow(rowData);
 
-    nameField.setText("");
-    streetField.setText("");
-    neighborhoodField.setText("");
-    clientType.setSelectedIndex(0);
-    idField.setText("");
+        cpfSet.add(cpf); // Adicione o CPF ao conjunto
+        nameField.setText("");
+        streetField.setText("");
+        numberField.setText("");
+        neighborhoodField.setText("");
+        clientType.setSelectedIndex(0);
+        idField.setText("");
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void nameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameFieldActionPerformed
